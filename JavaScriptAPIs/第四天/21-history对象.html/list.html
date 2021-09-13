@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="index.html">点击我去往首页</a>
+    <!-- 通过js模拟后退按钮 -->
+    <button>后退</button>
+    <script>
+        var btn = document.querySelector('button');
+        btn.addEventListener('click', function () {
+            // history.back();
+            //-1后退一步 负几后退几步
+            history.go(-1);
+        })
+    </script>
+</body>
+
+</html>

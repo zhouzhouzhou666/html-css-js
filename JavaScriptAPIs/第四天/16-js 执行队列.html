@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //js原来是单线程语言 同步 同一时间只能做一件事 所有的任务都需要排队 
+        // 第一个问题 先打印1 1s后打印3 再打印2
+        // console.log(1);
+
+        // setTimeout(function() {
+
+        //     console.log(3);
+
+        // }, 1000);
+
+        // console.log(2);
+        //现在HTML5允许js创建多个线程 异步 2的打印无需等待3 先打印1、2 再打印3
+
+        // 2. 第二个问题 打印顺序仍然是1、2、3
+        //console.log和setTimeout都是同步任务 都在主线程上执行 形成一个执行栈
+        //回调函数都属于异步任务 放到任务队列中执行 如setTimeout中的console.log(3)就属于回调函数fn
+        //js先执行同步任务 碰到回调函数就将其放到任务队列(消息队列)中且不执行 继续执行下一个同步任务
+        //当所有同步任务执行完毕后 系统再按次序读取任务队列中的异步任务 并将其放入执行栈中执行
+        // console.log(1);
+
+        // setTimeout(function() {
+
+        //     console.log(3);
+
+        // }, 0);
+
+        // console.log(2);
+
+        // 3. 第三个问题
+        //同步任务先执行
+        console.log(1);
+        //遇到回调函数click交给异步进程处理 点击后将其放入任务队列中 不点击不放入任务队列中
+        document.onclick = function () {
+            //3秒钟之前点击则click输出在3之前 3s后点击则click输出在3之后
+            console.log('click');
+        }
+        //接着执行同步任务
+        console.log(2);
+        //3s时间到后异步进程处理才将console.log(3)写入任务队列中 执行完后任务队列为空
+        setTimeout(function () {
+            console.log(3)
+        }, 3000)
+        //事件循环：执行栈反复去任务队列中查看是否有新加入的异步任务
+    </script>
+</body>
+
+</html>
