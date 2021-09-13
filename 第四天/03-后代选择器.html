@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 我想要把ol里面的li选出来改为pink */
+        /* 元素1 元素2 { 样式声明 } 元素1元素2用空格隔开 元素2是元素1的后代,可以是儿子也可以是孙子 只会更改元素2里的内容,元素1里的其他内容不变 */
+        ol li {
+            color: pink;
+        }
+
+        /* 中国 山东 济南 蓝翔 */
+        ol li a {
+            color: red;
+        }
+
+        .nav li a {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    Shift+Alt+↑↓ 复制当前内容到上下一行
+    <ol>
+        变态写法
+        <li>我是ol 的孩子</li>
+        <li>我是ol 的孩子</li>
+        <li>我是ol 的孩子</li>
+        <li><a href="#">我是孙子</a></li>
+    </ol>
+    <ul>
+        <li>我是ul 的孩子</li>
+        <li>我是ul 的孩子</li>
+        <li>我是ul 的孩子</li>
+        <li><a href="#">不会变化</a></li>
+    </ul>
+    <ul class="nav">
+        <li>我是ul 的孩子</li>
+        <li>我是ul 的孩子</li>
+        <li>我是ul 的孩子</li>
+        <li><a href="#">不会变化</a></li>
+        <li><a href="#">不会变化</a></li>
+        <li><a href="#">不会变化</a></li>
+        <li><a href="#">不会变化</a></li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 权重优先级:!important(∞)>行内样式style(1000)>类选择器,ID选择器(100)>伪类选择器(10)>元素选择器(1)>继承或者*(0) */
+        .test {
+            color: red;
+        }
+
+        div {
+            color: pink !important;
+        }
+
+        #demo {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test" id="demo" style="color: purple;">我要赚钱</div>
+</body>
+
+</html>

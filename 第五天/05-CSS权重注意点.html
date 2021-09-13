@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 父亲的权重是 100 */
+        #father {
+            color: red !important;
+        }
+
+        /* p继承的权重为 0 即使父亲加!important也一样*/
+        /* 以后看标签到底执行哪个样式,就先看这个标签有没有被直接选出来 */
+        p {
+            color: pink;
+        }
+
+        body {
+            color: red;
+        }
+
+        /* a链接浏览器默认制定了一个样式 蓝色的 有下划线 a{color: blue} */
+        a {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="father">
+        <p>我要找工作赚钱</p>
+    </div>
+    <a href="#">我是单独的样式</a>
+</body>
+
+</html>

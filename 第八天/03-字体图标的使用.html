@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 字体图标：主要用于显示页面中通用、常用的一些小图标 展示的是图标 本质是字体 */
+        /* 精灵图的缺点:
+        1. 图片文件比较大
+        2. 图片本身放大缩小会失真
+        3. 图片制作完毕 更换十分复杂 */
+        /* 字体图标的优点:
+        1. 轻量级 字体加载了 图标立马就会渲染 减少可服务区请求
+        2. 灵活性 本质是文字 可以实现随意更改颜色、产生阴影等效果
+        3. 兼容性 几乎支持所有的浏览器 放心使用 */
+        /* 注意：字体图标不能替代精灵图 只适用于一些比较简单的小图标 */
+
+        /* 字体声明 */
+        @font-face {
+            font-family: 'icomoon';
+            src: url('fonts/icomoon.eot?v0vuwv');
+            src: url('fonts/icomoon.eot?v0vuwv#iefix') format('embedded-opentype'),
+                url('fonts/icomoon.ttf?v0vuwv') format('truetype'),
+                url('fonts/icomoon.woff?v0vuwv') format('woff'),
+                url('fonts/icomoon.svg?v0vuwv#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        span {
+            font-family: 'icomoon';
+            font-size: 100px;
+            color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <span></span>
+    <span></span>
+</body>
+
+</html>

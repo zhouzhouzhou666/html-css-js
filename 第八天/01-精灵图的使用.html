@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 精灵技术目的: 为了有效地减少服务器接收和发送请求的次数，提高页面的加载速度 */
+        /* 精灵图的使用:
+        1.精灵技术主要针对于背景图片使用 把多个小背景图片整合到一张大图片中
+        2.大图片叫做sprites 精灵图或雪碧图
+        3.通过background-position调整图片x轴和y轴位置
+        4.一般情况下为往上往左移动 数值为负值
+        5.使用精灵图需要精确测量每个小背景图片的大小和位置*/
+        .box1 {
+            width: 60px;
+            height: 60px;
+            margin: 100px auto;
+            background: url(1.png) no-repeat -182px 0;
+            /* background-position: -182px 0; */
+        }
+
+        .box2 {
+            width: 27px;
+            height: 25px;
+            margin: 200px;
+            background: url(1.png) no-repeat -155px -106px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+</body>
+
+</html>

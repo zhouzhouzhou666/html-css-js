@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 伪元素选择器和标签选择器一样 权重为1 */
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        /* 伪元素在网页代码中是找不到对应标签的 他们都属于行内元素 */
+        /* div::before权重是2 */
+        div::before {
+            /* 这个content是必须要写的 */
+            display: inline-block;
+            content: '我';
+            width: 30px;
+            height: 40px;
+            background-color: purple;
+        }
+
+        div::after {
+            content: '小猪佩奇';
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        是
+    </div>
+</body>
+
+</html>
