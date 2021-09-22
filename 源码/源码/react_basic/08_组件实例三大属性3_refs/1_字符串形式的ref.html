@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>1_字符串形式的ref</title>
+</head>
+
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//创建组件
+		class Demo extends React.Component{
+			//展示左侧输入框的数据
+			showData = ()=>{
+				// const input = document.getElementById('input1')
+				// 标识时用ref标识 这里点的是refs 不是ref
+				const {input1} = this.refs
+				alert(input1.value)
+
+				// console.log(this);
+				// 这里收集的节点不是虚拟DOM而是虚拟DOM转换成真实DOM的真实节点 可以通过打断点查看input1中真实节点的属性
+				// console.log(this.refs.input1);
+				// debugger;
+
+				// 字符串形式的ref存在效率上的问题 现在已经过时不推荐使用了
+			}
+			//展示右侧输入框的数据
+			showData2 = ()=>{
+				const {input2} = this.refs
+				alert(input2.value)
+			}
+			render(){
+				// <input id="input1" type="text" placeholder="点击按钮提示数据"/>&nbsp;
+				// ref相当于标签给自己设置的一个标识
+				return(
+					<div>
+						<input ref="input1" type="text" placeholder="点击按钮提示数据"/>&nbsp;
+						<button onClick={this.showData}>点我提示左侧的数据</button>&nbsp;
+						<input ref="input2" onBlur={this.showData2} type="text" placeholder="失去焦点提示数据"/>
+					</div>
+				)
+			}
+		}
+		//渲染组件到页面
+		// 传递的标签属性都会被放到Demo组件实例对象的props里
+		ReactDOM.render(<Demo a="1" b="2"/>,document.getElementById('test'))
+	</script>
+</body>
+
+</html>

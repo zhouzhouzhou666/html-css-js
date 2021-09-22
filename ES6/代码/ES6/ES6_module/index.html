@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6 模块化</title>
+</head>
+
+<body>
+    <script type="module">
+        //1. 通用的导入方式
+        //引入 m1.js 模块内容
+        import * as m1 from "./src/js/m1.js";
+        // //引入 m2.js 模块内容
+        import * as m2 from "./src/js/m2.js";
+        // //引入 m3.js 
+        import * as m3 from "./src/js/m3.js";
+
+        // console.log(m3);
+        // 使用默认暴露m3里面的属性
+        m3.default.change();
+
+
+
+        //2. 解构赋值形式
+        import {school, teach} from "./src/js/m1.js";
+        // school和上面重名了 可以加as使用别名
+        import {school as guigu, findJob} from "./src/js/m2.js";
+        // m3的输出结果是一个对象 default是这个输出对象的一个属性 里面存着school和change
+        // 但是default不能直接使用 需要起一个别名
+        import {default as m3} from "./src/js/m3.js";
+
+        //3. 简便形式  针对默认暴露
+        import m3 from "./src/js/m3.js";
+        console.log(m3);
+    </script>
+
+    <!-- 引入入口文件使用模块 -->
+    <script src="./src/js/app.js" type="module"></script>
+</body>
+
+</html>

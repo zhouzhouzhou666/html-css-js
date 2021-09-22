@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器</title>
+</head>
+
+<body>
+    <script>
+        //声明一个数组
+        const xiyou = ['唐僧', '孙悟空', '猪八戒', '沙僧'];
+
+        // for...in显示的是键名 for...of显示的是键值
+        //使用 for...of 遍历数组
+        // for(let v of xiyou){
+        //     console.log(v);
+        // }
+
+        //数组能用for...of遍历是因为数组里面包含Symbol.iterator属性
+        console.log(xiyou);
+
+        //迭代器Iterator接口就是对象里面的一个属性，属性的名字叫做Symbol.iterator
+        let iterator = xiyou[Symbol.iterator]();
+
+        console.log(iterator); //里面包含next方法
+        // 调用一次next方法，指针自动指向数据结构的第一个成员，每一次调用指针都往后移一位，直到指向最后一个成员
+        // next方法返回一个包含value和done属性的对象，done返回true表示遍历循环完成
+
+        //调用对象的next方法
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+    </script>
+</body>
+
+</html>

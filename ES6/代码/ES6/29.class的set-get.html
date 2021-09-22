@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get 和 set</title>
+</head>
+
+<body>
+    <script>
+        // get 和 set
+        // class可以没有构造函数，是合法的
+        class Phone {
+            // get用于对对象的动态属性进行封装 比如总数、平均数这类随数值变化而变化的值
+            get price() {
+                console.log("价格属性被读取了");
+                return 'iloveyou';
+            }
+
+            // set用于添加控制和判断 比如判断设置的值是否合法 设置数字型输入字符串型则报错
+            set price(newVal) {
+                console.log('价格属性被修改了');
+            }
+        }
+
+        //实例化对象
+        let s = new Phone();
+
+        // console.log(s.price); 调用price这个属性时，price里的代码就会执行 且返回值就是price的返回值
+        s.price = 'free'; //对price进行赋值 set里的代码就会执行
+    </script>
+</body>
+
+</html>

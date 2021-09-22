@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>state</title>
+</head>
+
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		// 有状态的组件就是复杂组件 没有状态的就是简单组件
+		// 状态state是在组件实例对象的身上 不是在这个组件类的身上
+		// 正常创建的组件 只有类式组件才有三大属性 三大属性在类组件的实例上 函数式组件因为没有实例所以不存在三大属性
+		// let that
+		//1.创建组件
+		class Weather extends React.Component{
+			
+
+			//构造器调用几次？ ———— 1次
+			constructor(props){
+				console.log('constructor');
+				super(props)
+				// 只有关于this的操作必须放在super的后面 其他的操作可以放在super的前方
+				//初始化状态 state是一个对象
+				this.state = {isHot:false,wind:'微风'}
+				// 构造器里的this就是组件实例对象
+				// that = this
+				//解决changeWeather中this指向问题
+				// bind有两个作用:1.生成一个新的函数 2.改变函数的this
+				// 右边的this.changeWeather不是实例对象自身的 而是原型上的changeWeather方法 bind里的this就是Weather的实例对象
+				// 左边的this.changeWeather表示Weather的实例对象自身多了一个changeWeather方法
+				this.changeWeather = this.changeWeather.bind(this)
+				// this.demo = this.test.bind(this)
+			}
+
+			//render调用几次？ ———— 1+n次 1是初始化的那次 n是状态更新的次数
+			render(){
+				console.log('render');
+				//读取状态 解构赋值
+				// render里的this是组件实例对象 因为render是react先new出来一个该类的实例 然后这个实例再去调用原型上的render方法
+				const {isHot,wind} = this.state
+				// 这里对实例对象上的state进行解构赋值后 今天天气很{this.state.isHot ? '炎热' : '凉爽'}就可以直接写成 今天天气很{isHot ? '炎热' : '凉爽'}
+				// this.state.isHot
+				// render里的this输出的是组件的实例对象
+				// console.log(this);
+				
+				// return <h1 id="title">今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+
+				// return <h1 onClick={demo()}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+				// onClick={}里的函数不要加() 因为加()就默认为函数执行了 将函数的返回值undefined返回了 此时点击标题就demo函数不会执行打印标题被点击了 打印的标题被点击了是demo函数执行后内部自己执行的语句
+				// 这里要调用changeWeather函数不能直接写changeWeather 需要用this.changeWeather调用
+				// return <h1 onClick={changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+
+				// 这里相当于把实例对象Weather身上的changeWeather赋给了onClick方法
+				// 相当于是onClick这个函数在调用changeWeather方法 而不是Weather的实例对象在调用changeWeather方法 所以此时changeWeather方法里的this是undefined
+				// 当实例对象自身拥有changeWeather方法后this.changeWeather就不是类里的changeWeather方法 而是实例对象自身的changeWeather方法
+				return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+				// return <h1 onClick={this.demo}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+			}
+
+			//changeWeather调用几次？ ———— 点几次调几次
+			// 调用changeWeather后才调用render重新渲染页面
+			// 将函数放到类中不加function
+			changeWeather(){
+			// test(){
+				//changeWeather放在哪里？ ———— Weather的原型对象上，供实例使用
+				//通过Weather实例调用changeWeather时，changeWeather中的this就是Weather实例
+				//但由于changeWeather是作为onClick的回调，所以不是通过实例调用的，是直接调用
+				//类中的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+				
+				console.log('changeWeather');
+				//获取原来的isHot值
+				const isHot = this.state.isHot
+				//严重注意：状态必须通过setState进行更新,且更新是一种合并，不是替换。
+				// 这里的setState在类组件继承的React.Component组件上
+				// 之所以有state属性就是因为react内部有关于state的一系列方法 比如setState 所以一些重要的属性名是不能乱写的
+				this.setState({isHot:!isHot})
+				console.log(this);
+
+				//严重注意：状态(state)不可直接更改，下面这行就是直接更改！！！ 虽然代码确实更改了但是react不认可不会渲染出来 react开发者工具上的isHot仍然是false
+				//this.state.isHot = !isHot //这是错误的写法
+			}
+		}
+		//2.渲染组件到页面
+		// 这里的<Weather/> react会自动new一个Weather实例对象 并不是手动new的实例对象 也就不能手动传递参数 所以构造器里的参数要写props
+		ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+		// Weather的实例对象w调用changeWeather 此时changeWeather里的this是Weather的实例对象w
+		// const w = new Weather()
+		// w.changeWeather()
+		
+		// const title = document.getElementById('title')
+		// title.addEventListener('click',()=>{
+		// 	console.log('标题被点击了');
+		// })
+
+		// const title = document.getElementById('title')
+		// title.onclick = ()=>{
+		// 	console.log('标题被点击了');
+		// }
+
+		// function demo(){
+		// 	console.log('标题被点击了');
+		// }
+
+		// function changeWeather(){
+			// console.log('此处修改isHot的值');
+			// 此时这里babel开启了严格模式 this指向的是undefined不存在state 所以这里拿不到isHot
+			// const {isHot} = this.state
+			// console.log(isHot);
+			// 这里因为new的Weather实例对象是react自动new的 不是手动new的Weather实例对象 所以拿不到react自动生成的实例对象里的state
+
+			// 在外面定义一个that 然后将构造器中state的this赋给that 这里就能访问到构造器里的state
+			// 但是这样的写法太繁琐了 一般把一个组件相关的代码都封装到一个组件里面 不要在组件外面声明变量调用
+			// console.log(that.state.isHot);
+		// }
+	</script>
+</body>
+
+</html>
