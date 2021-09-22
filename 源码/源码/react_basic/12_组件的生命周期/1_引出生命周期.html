@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>1_引出生命周期</title>
+</head>
+
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//创建组件
+		//生命周期回调函数 <=> 生命周期钩子函数 <=> 生命周期函数 <=> 生命周期钩子
+		class Life extends React.Component{
+
+			state = {opacity:1}
+
+			death = ()=>{
+				// 1.清除定时器 删除时关闭定时器
+				// clearInterval(this.timer)
+				//卸载unmount组件
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			// action = ()=>{
+			// 	setInterval(() => {
+			// 		//获取原状态
+			// 		let {opacity} = this.state
+			// 		//减小0.1
+			// 		opacity -= 0.1
+			// 		if(opacity <= 0) opacity = 1
+			// 		//设置新的透明度
+			// 		this.setState({opacity})
+			// 	}, 200);
+			// }
+
+			// 不用通过点击按钮才开始文字变化 而是组件挂载到页面上后文字自动开始变化
+			//组件挂载mount完毕
+			// 这个函数相当于render的兄弟 也是实例对象自己调用的 所以不用写赋值语句和箭头函数
+			componentDidMount(){
+				console.log('componentDidMount');
+				this.timer = setInterval(() => {
+					//获取原状态
+					let {opacity} = this.state
+					//减小0.1
+					opacity -= 0.1
+					// 这里不写opacity === 0是因为在js中小数的运算是带有误差的 比如0.1 + 0.2 != 0.3
+					if(opacity <= 0) opacity = 1
+					//设置新的透明度
+					// this.setState({opacity:opacity})重名时可以简写 只写一个opacity
+					this.setState({opacity})
+				}, 200);
+			}
+
+			//2.组件将要卸载 即将卸载时关闭定时器
+			componentWillUnmount(){
+				//清除定时器
+				// 组件卸载无法渲染时 需要关闭定时器
+				clearInterval(this.timer)
+			}
+
+			//初始化渲染、状态更新之后
+			render(){
+				console.log('render');
+				// 定时器不能放在render里 因为放在render里的定时器是每隔200毫秒就会更新一次opacity状态 而每更新一次状态就会调用一次render 调用一次render就会重新再开启一个定时器 这样就会形成一个无限循环的递归并且这个递归会越来越快 呈指数型增长 所以字体变淡的频率就会越来越快 CPU的温度也会越来越高
+				return(
+					<div>
+						<h2 style={{opacity:this.state.opacity}}>React学不会怎么办？</h2>
+						{/*这里把组件卸载后定时器依旧在开启状态 render仍然继续渲染但组件已经没有了 无法渲染就会报错*/}
+						<button onClick={this.death}>不活了</button>
+						{/*设置一个按钮并绑定一个action函数 点击按钮调用action函数实现文字减淡变化*/}
+						{/*<button onClick={this.action}>开始变化</button>*/}
+					</div>
+				)
+			}
+		}
+		//渲染组件
+		ReactDOM.render(<Life/>,document.getElementById('test'))
+	</script>
+</body>
+
+</html>

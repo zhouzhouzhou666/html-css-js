@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>state简写方式</title>
+</head>
+
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//1.创建组件
+		class Weather extends React.Component{
+			// 如果初始化的一些属性的值需要从外部传递进来 就必须写构造器constructor
+			//初始化状态
+			state = {isHot:false,wind:'微风'}
+
+			render(){
+				const {isHot,wind} = this.state
+				return <h1 onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+			}
+
+			//自定义方法————要用赋值语句的形式+箭头函数
+			// 类组件中的自定义方法都是作为事件的回调函数去使用 用于交互 比如失去焦点时调用 鼠标离开调用
+			// 箭头函数自身没有this 它的this是找其外层函数的this指向
+			// 直接写函数changeWeather(){}是放在了Weather的原型对象上 changeWeather = function(){}是放在了实例自身上Weather原型上就没有changeWeather了
+			// 类里面不能写console.log(this)
+			changeWeather = ()=>{
+				const isHot = this.state.isHot
+				// const {isHot} = this.state
+				this.setState({isHot:!isHot})
+				// console.log(this);
+			}
+		}
+		//2.渲染组件到页面
+		ReactDOM.render(<Weather/>,document.getElementById('test'))
+	</script>
+</body>
+
+</html>
